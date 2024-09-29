@@ -1,0 +1,29 @@
+
+services:
+  promocode:
+    image: ${DOCKER_REGISTRY-}pcfgivingtocustomerwebhost
+    build:
+      context: .
+      dockerfile: Pcf.GivingToCustomer/Pcf.GivingToCustomer.WebHost/Dockerfile
+    ports:
+      - "5002:8080"
+      - "5037:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_DBUSER=${ASPNETCORE_DBUSER}
+      - ASPNETCORE_DBPASSWORD=${ASPNETCORE_DBPASSWORD}
+      - ASPNETCORE_DBBASE=${ASPNETCORE_DBBASE}
+    depends_on:
+    - mongoDbPromoCode  
+  mongoDbPromoCode:
+    image: mongo:latest
+    environment:
+      MONGO_DB: ${ASPNETCORE_DBBASE}
+      MONGO_USER: ${ASPNETCORE_DBUSER}
+      MONGO_PASSWORD: ${ASPNETCORE_DBPASSWORD}
+    ports:
+      - "27044:${ASPNETCORE_DBPORT}"
+    volumes:
+      - mongo_data:/var/lib/mongo/data
+volumes:
+  mongo_data:
