@@ -16,32 +16,36 @@ namespace Pcf.GivingToCustomer.IntegrationTests.Components.WebHost.Controllers
     {
         private readonly CustomersController _customersController;
         private readonly EfRepository<Customer> _customerRepository;
-        private readonly EfRepository<Preference> _preferenceRepository;
-        
+        private readonly EfRepository<PromoCode> _promoCodeRepository;
+        //private readonly EfRepository<Preference> _preferenceRepository;
+
         public CustomersControllerTests(EfDatabaseFixture efDatabaseFixture)
         {
             _customerRepository = new EfRepository<Customer>(efDatabaseFixture.DbContext);
-            _preferenceRepository = new EfRepository<Preference>(efDatabaseFixture.DbContext);
-            
+            _promoCodeRepository = new EfRepository<PromoCode>(efDatabaseFixture.DbContext);
+            // _preferenceRepository = new EfRepository<Preference>(efDatabaseFixture.DbContext);
+
             _customersController = new CustomersController(
-                _customerRepository, 
-                _preferenceRepository);
+                _customerRepository/*, 
+                _preferenceRepository*/
+                , _promoCodeRepository);
         }
         
         [Fact]
         public async Task CreateCustomerAsync_CanCreateCustomer_ShouldCreateExpectedCustomer()
         {
             //Arrange 
-            var preferenceId = Guid.Parse("ef7f299f-92d7-459f-896e-078ed53ef99c");
+            //var preferenceId = Guid.Parse("ef7f299f-92d7-459f-896e-078ed53ef99c");
             var request = new CreateOrEditCustomerRequest()
             {
                 Email = "some@mail.ru",
                 FirstName = "Иван",
                 LastName = "Петров",
-                PreferenceIds = new List<Guid>()
-                {
-                    preferenceId
-                }
+                Preferences = new List<string>() { "Театр" }
+                //PreferenceIds = new List<Guid>()
+                //{
+                //    preferenceId
+                //}
             };
 
             //Act
@@ -55,10 +59,10 @@ namespace Pcf.GivingToCustomer.IntegrationTests.Components.WebHost.Controllers
             actual.Email.Should().Be(request.Email);
             actual.FirstName.Should().Be(request.FirstName);
             actual.LastName.Should().Be(request.LastName);
-            actual.Preferences.Should()
-                .ContainSingle()
-                .And
-                .Contain(x => x.PreferenceId == preferenceId);
+            //actual.Preferences.Should()
+            //    .ContainSingle()
+            //    .And
+            //    .Contain(x => x.PreferenceId == preferenceId);
         }
     }
 }

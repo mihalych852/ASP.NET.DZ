@@ -1,4 +1,5 @@
-﻿using Pcf.GivingToCustomer.DataAccess;
+﻿using Microsoft.EntityFrameworkCore;
+using Pcf.GivingToCustomer.DataAccess;
 using Pcf.GivingToCustomer.DataAccess.Data;
 
 namespace Pcf.GivingToCustomer.IntegrationTests.Data
@@ -6,9 +7,9 @@ namespace Pcf.GivingToCustomer.IntegrationTests.Data
     public class EfTestDbInitializer
         : IDbInitializer
     {
-        private readonly DataContext _dataContext;
+        private readonly DbContext _dataContext;
 
-        public EfTestDbInitializer(DataContext dataContext)
+        public EfTestDbInitializer(DbContext dataContext)
         {
             _dataContext = dataContext;
         }
@@ -18,8 +19,8 @@ namespace Pcf.GivingToCustomer.IntegrationTests.Data
             _dataContext.Database.EnsureDeleted();
             _dataContext.Database.EnsureCreated();
 
-            _dataContext.AddRange(TestDataFactory.Preferences);
-            _dataContext.SaveChanges();
+            //_dataContext.AddRange(TestDataFactory.Preferences);
+            //_dataContext.SaveChanges();
             
             _dataContext.AddRange(TestDataFactory.Customers);
             _dataContext.SaveChanges();

@@ -1,13 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Pcf.GivingToCustomer.DataAccess.Data
 {
     public class EfDbInitializer
         : IDbInitializer
     {
-        private readonly DataContext _dataContext;
+        private readonly DbContext _dataContext;
 
-        public EfDbInitializer(DataContext dataContext)
+        public EfDbInitializer(DbContext dataContext)
         {
             _dataContext = dataContext;
         }
@@ -17,8 +18,8 @@ namespace Pcf.GivingToCustomer.DataAccess.Data
             _dataContext.Database.EnsureDeleted();
             _dataContext.Database.EnsureCreated();
 
-            _dataContext.AddRange(FakeDataFactory.Preferences);
-            _dataContext.SaveChanges();
+            //_dataContext.AddRange(FakeDataFactory.Preferences);
+            //_dataContext.SaveChanges();
             
             _dataContext.AddRange(FakeDataFactory.Customers);
             _dataContext.SaveChanges();

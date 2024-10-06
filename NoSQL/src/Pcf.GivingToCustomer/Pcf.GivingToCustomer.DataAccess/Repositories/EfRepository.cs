@@ -14,9 +14,13 @@ namespace Pcf.GivingToCustomer.DataAccess.Repositories
         : IRepository<T>
         where T: BaseEntity
     {
-        private readonly DataContext _dataContext;
+        //private readonly DataContext _dataContext;
 
-        public EfRepository(DataContext dataContext)
+        //public EfRepository(DataContext dataContext)
+        //{
+        private readonly DbContext _dataContext;
+
+        public EfRepository(DbContext dataContext)
         {
             _dataContext = dataContext;
         }

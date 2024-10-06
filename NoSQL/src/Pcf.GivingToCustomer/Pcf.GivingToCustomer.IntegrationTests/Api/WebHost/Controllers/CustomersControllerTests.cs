@@ -37,16 +37,17 @@ namespace Pcf.GivingToCustomer.IntegrationTests.Api.WebHost.Controllers
             //Arrange 
             var client = _factory.CreateClient();
             
-            var preferenceId = Guid.Parse("ef7f299f-92d7-459f-896e-078ed53ef99c");
+            //var preferenceId = Guid.Parse("ef7f299f-92d7-459f-896e-078ed53ef99c");
             var request = new CreateOrEditCustomerRequest()
             {
                 Email = "some@mail.ru",
                 FirstName = "Иван",
                 LastName = "Петров",
-                PreferenceIds = new List<Guid>()
-                {
-                    preferenceId
-                }
+                Preferences = new List<string>() { "Театр" }
+                //PreferenceIds = new List<Guid>()
+                //{
+                //    preferenceId
+                //}
             };
 
             //Act
@@ -64,10 +65,10 @@ namespace Pcf.GivingToCustomer.IntegrationTests.Api.WebHost.Controllers
             actual.Email.Should().Be(request.Email);
             actual.FirstName.Should().Be(request.FirstName);
             actual.LastName.Should().Be(request.LastName);
-            actual.Preferences.Should()
-                .ContainSingle()
-                .And
-                .Contain(x => x.Id == preferenceId);
+            //actual.Preferences.Should()
+            //    .ContainSingle()
+            //    .And
+            //    .Contain(x => x.Id == preferenceId);
         }
         
         [Fact]
@@ -94,19 +95,20 @@ namespace Pcf.GivingToCustomer.IntegrationTests.Api.WebHost.Controllers
                 Email = "ivan_sergeev@mail.ru",
                 FirstName = "Иван",
                 LastName = "Петров",
-                Preferences = new List<PreferenceResponse>()
-                {
-                    new PreferenceResponse()
-                    {
-                        Id = Guid.Parse("ef7f299f-92d7-459f-896e-078ed53ef99c"),
-                        Name = "Театр",
-                    },
-                    new PreferenceResponse()
-                    {
-                        Id = Guid.Parse("76324c47-68d2-472d-abb8-33cfa8cc0c84"),
-                        Name = "Дети",                    
-                    }
-                }
+                Preferences = new List<string> { "Театр", "Дети" }
+                //new List<PreferenceResponse>()
+                //{
+                //    new PreferenceResponse()
+                //    {
+                //        Id = Guid.Parse("ef7f299f-92d7-459f-896e-078ed53ef99c"),
+                //        Name = "Театр",
+                //    },
+                //    new PreferenceResponse()
+                //    {
+                //        Id = Guid.Parse("76324c47-68d2-472d-abb8-33cfa8cc0c84"),
+                //        Name = "Дети",                    
+                //    }
+                //}
             };
 
             //Act

@@ -12,7 +12,8 @@ namespace Pcf.GivingToCustomer.WebHost.Models
         
         public string PromoCode { get; set; }
 
-        public Guid PreferenceId { get; set; }
+        //public Guid PreferenceId { get; set; }
+        public string Preference { get; set; }
 
         public string BeginDate { get; set; }
 

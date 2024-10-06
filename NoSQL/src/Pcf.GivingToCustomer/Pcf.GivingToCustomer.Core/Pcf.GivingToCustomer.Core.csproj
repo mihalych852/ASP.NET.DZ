@@ -4,4 +4,10 @@
         <TargetFramework>net8.0</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Compile Remove="Domain\CustomerPreference.cs" />
+      <Compile Remove="Domain\Preference.cs" />
+      <Compile Remove="Domain\PromoCodeCustomer.cs" />
+    </ItemGroup>
+
 </Project>

@@ -15,11 +15,26 @@ namespace Pcf.GivingToCustomer.Core.Domain
         public DateTime EndDate { get; set; }
 
         public Guid PartnerId { get; set; }
+
+        public string Preference { get; set; }
+
+
+        /* sql
+        public string Code { get; set; }
+
+        public string ServiceInfo { get; set; }
+
+        public DateTime BeginDate { get; set; }
+
+        public DateTime EndDate { get; set; }
+
+        public Guid PartnerId { get; set; }
         
         public virtual Preference Preference { get; set; }
 
         public Guid PreferenceId { get; set; }
         
         public virtual ICollection<PromoCodeCustomer> Customers { get; set; }
+        */
     }
 }

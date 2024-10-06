@@ -9,7 +9,7 @@ using Pcf.GivingToCustomer.WebHost.Models;
 {
     public class PromoCodeMapper
     {
-        public static PromoCode MapFromModel(GivePromoCodeRequest request, Preference preference, IEnumerable<Customer> customers) {
+        public static PromoCode MapFromModel(GivePromoCodeRequest request/*, Preference preference, IEnumerable<Customer> customers*/) {
 
             var promocode = new PromoCode();
             promocode.Id = request.PromoCodeId;
@@ -21,22 +21,24 @@ using Pcf.GivingToCustomer.WebHost.Models;
             promocode.BeginDate = DateTime.Parse(request.BeginDate);
             promocode.EndDate = DateTime.Parse(request.EndDate);
 
-            promocode.Preference = preference;
-            promocode.PreferenceId = preference.Id;
+            promocode.Preference = request.Preference;
 
-            promocode.Customers = new List<PromoCodeCustomer>();
+            //promocode.Preference = preference;
+            //promocode.PreferenceId = preference.Id;
 
-            foreach (var item in customers)
-            {
-                promocode.Customers.Add(new PromoCodeCustomer()
-                {
+            //promocode.Customers = new List<PromoCodeCustomer>();
 
-                    CustomerId = item.Id,
-                    Customer = item,
-                    PromoCodeId = promocode.Id,
-                    PromoCode = promocode
-                });
-            };
+            //foreach (var item in customers)
+            //{
+            //    promocode.Customers.Add(new PromoCodeCustomer()
+            //    {
+
+            //        CustomerId = item.Id,
+            //        Customer = item,
+            //        PromoCodeId = promocode.Id,
+            //        PromoCode = promocode
+            //    });
+            //};
 
             return promocode;
         }

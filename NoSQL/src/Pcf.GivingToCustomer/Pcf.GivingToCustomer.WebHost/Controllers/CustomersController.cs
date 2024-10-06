@@ -19,13 +19,15 @@ namespace Pcf.GivingToCustomer.WebHost.Controllers
         : ControllerBase
     {
         private readonly IRepository<Customer> _customerRepository;
-        private readonly IRepository<Preference> _preferenceRepository;
+        private readonly IRepository<PromoCode> _promoCodeRepository;
+        //private readonly IRepository<Preference> _preferenceRepository;
 
-        public CustomersController(IRepository<Customer> customerRepository, 
-            IRepository<Preference> preferenceRepository)
+        public CustomersController(IRepository<Customer> customerRepository, IRepository<PromoCode> promoCodeRepository
+            /*,IRepository<Preference> preferenceRepository*/)
         {
             _customerRepository = customerRepository;
-            _preferenceRepository = preferenceRepository;
+            //_preferenceRepository = preferenceRepository;
+            _promoCodeRepository = promoCodeRepository;
         }
         
         /// <summary>
@@ -57,8 +59,13 @@ namespace Pcf.GivingToCustomer.WebHost.Controllers
         public async Task<ActionResult<CustomerResponse>> GetCustomerAsync(Guid id)
         {
             var customer =  await _customerRepository.GetByIdAsync(id);
+            var promoCodes = new List<PromoCode>(); 
+            if (customer != null && customer.PromoCodeIds != null && customer.PromoCodeIds.Count > 0)
+            {
+                promoCodes.AddRange( await _promoCodeRepository.GetRangeByIdsAsync(customer.PromoCodeIds));
+            }
 
-            var response = new CustomerResponse(customer);
+            var response = new CustomerResponse(customer, promoCodes);
 
             return Ok(response);
         }
@@ -70,11 +77,11 @@ namespace Pcf.GivingToCustomer.WebHost.Controllers
         [HttpPost]
         public async Task<ActionResult<CustomerResponse>> CreateCustomerAsync(CreateOrEditCustomerRequest request)
         {
-            //Получаем предпочтения из бд и сохраняем большой объект
-            var preferences = await _preferenceRepository
-                .GetRangeByIdsAsync(request.PreferenceIds);
+            ////Получаем предпочтения из бд и сохраняем большой объект
+            //var preferences = await _preferenceRepository
+            //    .GetRangeByIdsAsync(request.PreferenceIds);
 
-            Customer customer = CustomerMapper.MapFromModel(request, preferences);
+            Customer customer = CustomerMapper.MapFromModel(request/*, preferences*/);
             
             await _customerRepository.AddAsync(customer);
 
@@ -94,9 +101,9 @@ namespace Pcf.GivingToCustomer.WebHost.Controllers
             if (customer == null)
                 return NotFound();
             
-            var preferences = await _preferenceRepository.GetRangeByIdsAsync(request.PreferenceIds);
+            //var preferences = await _preferenceRepository.GetRangeByIdsAsync(request.PreferenceIds);
             
-            CustomerMapper.MapFromModel(request, preferences, customer);
+            CustomerMapper.MapFromModel(request, /*preferences,*/ customer);
 
             await _customerRepository.UpdateAsync(customer);
 

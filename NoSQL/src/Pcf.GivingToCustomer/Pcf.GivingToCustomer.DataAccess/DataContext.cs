@@ -11,7 +11,7 @@ namespace Pcf.GivingToCustomer.DataAccess
 
         public DbSet<Customer> Customers { get; set; }
         
-        public DbSet<Preference> Preferences { get; set; }
+        //public DbSet<Preference> Preferences { get; set; }
 
         public DataContext()
         {
@@ -25,7 +25,7 @@ namespace Pcf.GivingToCustomer.DataAccess
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        {/*
             modelBuilder.Entity<CustomerPreference>()
                 .HasKey(bc => new {bc.CustomerId, bc.PreferenceId});
             modelBuilder.Entity<CustomerPreference>()
@@ -35,7 +35,7 @@ namespace Pcf.GivingToCustomer.DataAccess
             modelBuilder.Entity<CustomerPreference>()
                 .HasOne(bc => bc.Preference)
                 .WithMany()
-                .HasForeignKey(bc => bc.PreferenceId); 
+                .HasForeignKey(bc => bc.PreferenceId); */
         }
     }
 }
