@@ -39,7 +39,7 @@ namespace Pcf.GivingToCustomer.IntegrationTests
                 services.AddScoped<INotificationGateway, NotificationGateway>();
                 services.AddScoped<IDbInitializer, EfTestDbInitializer>();
 
-                services.Configure<MongoDBSettings>(configuration.GetSection(nameof(MongoDBSettings)));
+                services.Configure<MongoDBSettings>(configuration.GetSection("TestMongoDBSettings"));
 
                 services.AddScoped<DbContext, MongoDBContext>();
 

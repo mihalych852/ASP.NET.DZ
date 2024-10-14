@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Pcf.GivingToCustomer.Core.Abstractions.Gateways;
+using Pcf.GivingToCustomer.Core.Domain;
 using Pcf.GivingToCustomer.IntegrationTests.Fakes;
 using Pcf.GivingToCustomer.WebHost;
 using Pcf.GivingToCustomer.WebHost.Models;
@@ -95,21 +96,22 @@ namespace Pcf.GivingToCustomer.IntegrationTests.Api.WebHost.Controllers
                 Email = "ivan_sergeev@mail.ru",
                 FirstName = "Иван",
                 LastName = "Петров",
-                Preferences = new List<string> { "Театр", "Дети" }
-                //new List<PreferenceResponse>()
-                //{
-                //    new PreferenceResponse()
-                //    {
-                //        Id = Guid.Parse("ef7f299f-92d7-459f-896e-078ed53ef99c"),
-                //        Name = "Театр",
-                //    },
-                //    new PreferenceResponse()
-                //    {
-                //        Id = Guid.Parse("76324c47-68d2-472d-abb8-33cfa8cc0c84"),
-                //        Name = "Дети",                    
-                //    }
-                //}
-            };
+                Preferences = new List<string> { "Театр", "Дети" },
+                PromoCodes = new List<PromoCodeShortResponse>()
+            //new List<PreferenceResponse>()
+            //{
+            //    new PreferenceResponse()
+            //    {
+            //        Id = Guid.Parse("ef7f299f-92d7-459f-896e-078ed53ef99c"),
+            //        Name = "Театр",
+            //    },
+            //    new PreferenceResponse()
+            //    {
+            //        Id = Guid.Parse("76324c47-68d2-472d-abb8-33cfa8cc0c84"),
+            //        Name = "Дети",                    
+            //    }
+            //}
+        };
 
             //Act
             var response = await client.GetAsync($"/api/v1/customers/{expected.Id}");
